@@ -1,10 +1,9 @@
 STLport-5.2.1
 =============
 
-**********************************************************************
-* 	README file for STLport 5.0                                    *
-*                                                                    *
-**********************************************************************
+
+README file for STLport 5.0 
+
 
 This directory contains the STLport-5.0 release.
 

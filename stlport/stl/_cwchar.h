@@ -21,7 +21,7 @@
 #    include <stl/_mbstate_t.h>
 #  endif
 #else
-#  if defined (__GNUC__)
+#  if defined (__GNUC__) && defined(_STLP_USE_NEW_C_HEADERS)
 #    if defined (_STLP_HAS_INCLUDE_NEXT)
 #      include_next <cstddef>
 #    else

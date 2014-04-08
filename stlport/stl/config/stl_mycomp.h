@@ -30,8 +30,6 @@
 #ifndef _STLP_MYCOMP_H
 #define  _STLP_MYCOMP_H
 
-#error "Your compiler version is not recognized by STLport. Please edit <stlport/stl/config/stl_mycomp.h>"
-
 //==========================================================
 
 // the values choosen here as defaults try to give
@@ -45,10 +43,10 @@
 // #  define _STLP_NO_WCHAR_T  1
 
 // Define if wchar_t is not an intrinsic type, and is actually a typedef to unsigned short.
-// #  define _STLP_WCHAR_T_IS_USHORT 1
+#define _STLP_WCHAR_T_IS_USHORT 1
 
 // Uncomment if long long is available
-// #  define _STLP_LONG_LONG long long
+#define _STLP_LONG_LONG long long
 
 // Uncomment if long double is not available
 // #  define _STLP_NO_LONG_DOUBLE 1
@@ -99,14 +97,14 @@
 // # define _STLP_BROKEN_USING_DIRECTIVE 1
 
 // Uncomment this if your compiler does not support exceptions
-// #  define _STLP_HAS_NO_EXCEPTIONS 1
+#define _STLP_HAS_NO_EXCEPTIONS 1
 
 // Uncomment this when you are able to detect that the user do not
 // want to use the exceptions feature.
-// #  define _STLP_DONT_USE_EXCEPTIONS 1
+#define _STLP_DONT_USE_EXCEPTIONS 1
 
 // Uncomment this if your compiler does not support exception specifications
-// #  define _STLP_NO_EXCEPTION_SPEC
+#define _STLP_NO_EXCEPTION_SPEC
 
 // Define this if your compiler requires return statement after throw()
 // # define _STLP_THROW_RETURN_BUG 1
@@ -116,16 +114,16 @@
 
 // Header <new> that comes with the compiler
 // does not define bad_alloc exception
-// #  define _STLP_NO_BAD_ALLOC  1
+#define _STLP_NO_BAD_ALLOC  1
 
 // Define this if your compiler do not throw bad_alloc from the new operator
-// #  define _STLP_NEW_DONT_THROW_BAD_ALLOC  1
+#define _STLP_NEW_DONT_THROW_BAD_ALLOC  1
 
 // Define this if your compiler has no rtti support or if it has been disabled
-// #  define _STLP_NO_RTTI 1
+#define _STLP_NO_RTTI 1
 
 // Define this if there is no native type_info definition
-// #  define _STLP_NO_TYPEINFO 1
+#define _STLP_NO_TYPEINFO 1
 
 // Uncomment if member template methods are not available
 // #  define _STLP_NO_MEMBER_TEMPLATES   1
@@ -232,13 +230,13 @@
 // #  define   _STLP_NO_AT_MEMBER_FUNCTION 1
 
 // Define this if compiler lacks <exception> header
-// #  define _STLP_NO_EXCEPTION_HEADER 1
+#define _STLP_NO_EXCEPTION_HEADER 1
 
 // Uncomment this if your C library has lrand48() function
 // #  define _STLP_RAND48 1
 
 // Uncomment if native new-style C library headers lile <cstddef>, etc are not available.
-// #   define _STLP_HAS_NO_NEW_C_HEADERS 1
+#define _STLP_HAS_NO_NEW_C_HEADERS 1
 
 // uncomment if new-style headers <new> is available
 // #  define _STLP_HAS_NEW_NEW_HEADER 1
@@ -249,7 +247,7 @@
 
 // uncomment this if <cstdio> and the like put stuff in ::namespace,
 // not std::
-// #  define _STLP_VENDOR_GLOBAL_CSTD
+#define _STLP_VENDOR_GLOBAL_CSTD
 
 // uncomment this if your compiler consider as ambiguous a function imported within
 // the stlport namespace and called without scope (:: or std::)
@@ -257,7 +255,7 @@
 
 // uncomment this if your compiler define all the C math functions C++ additional
 // overloads in ::namespace and not only in std::.
-// #  define _STLP_HAS_GLOBAL_C_MATH_FUNCTIONS 1
+#define _STLP_HAS_GLOBAL_C_MATH_FUNCTIONS 1
 
 // Edit relative path below (or put full path) to get native
 // compiler headers included. Default is "../include".

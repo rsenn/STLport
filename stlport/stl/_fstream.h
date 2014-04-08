@@ -99,6 +99,8 @@ public:
     return true;
 #elif defined (_STLP_WIN32) || defined (_STLP_VM)
     return (_M_openmode & ios_base::binary) != 0;
+#elif defined (_STLP_MAPIP) || defined (_STLP_MAPIP2)
+    return true;
 #else
 #  error "Port!"
 #endif

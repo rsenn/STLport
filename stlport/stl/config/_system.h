@@ -158,6 +158,8 @@
 #  endif
 
 #  include <stl/config/_windows.h>
+#elif defined (MAPIP)
+#	include <stl/config/_mapip.h>
 #else
 #  error Unknown platform !!
 #endif

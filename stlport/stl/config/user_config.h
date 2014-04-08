@@ -36,9 +36,8 @@
  * If you want iostreams, you have to compile library in ../build/lib
  * and supply resulting library at link time.
  */
-/*
-#define _STLP_NO_IOSTREAMS 1
-*/
+//#define _STLP_NO_IOSTREAMS 1
+
 
 /*
  * Set _STLP_DEBUG to turn the "Debug Mode" on.
@@ -204,6 +203,7 @@
  * a Microsoft Visual Studio release. This change native C/C++ library location
  * and implementation, please define this to get correct STLport configuration.
  */
+
 /*
 #define _STLP_USING_PLATFORM_SDK_COMPILER 1
 */

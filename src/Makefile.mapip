@@ -1,0 +1,43 @@
+MOSYNCDIR ?= /opt/MoSync-4.0-Alpha
+
+CC = $(MOSYNCDIR)/bin/xgcc
+CXX = $(CC) -x c++
+
+CSOURCES = c_locale.c cxa.c
+# allocators.cpp dll_main.cpp 
+CXXSOURCES = bitset.cpp  codecvt.cpp collate.cpp complex.cpp complex_io.cpp complex_trig.cpp ctype.cpp facets_byname.cpp fstream.cpp ios.cpp iostream.cpp istream.cpp locale.cpp locale_catalog.cpp locale_impl.cpp messages.cpp monetary.cpp num_get.cpp num_get_float.cpp num_put.cpp num_put_float.cpp numpunct.cpp ostream.cpp sstream.cpp stdio_streambuf.cpp string.cpp strstream.cpp time_facets.cpp
+SOURCES = $(CSOURCES) $(CXXSOURCES)
+
+CASMS = $(CSOURCES:%.c=%.s)
+CXXASMS = $(CXXSOURCES:%.cpp=%.s)
+
+ASMS = $(CASMS) $(CXXASMS)
+
+CPPFLAGS = -I../stlport -I$(MOSYNCDIR)/include/newlib 
+CFLAGS = -g -O2 -DMAPIP 
+CXXFLAGS = $(CFLAGS) 
+#fexceptions -fvisibility=hidden
+
+LIBPREFIX = 
+LIBEXT = .lib
+LIBRARY = $(LIBPREFIX)stlport$(LIBEXT)
+
+RANLIB = true
+AR = ${MOSYNCDIR}/bin/pipe-tool
+ARFLAGS = -L 
+
+all: $(LIBRARY)
+
+
+$(LIBRARY): $(ASMS)
+	$(AR) $(ARFLAGS) $@ $^
+	$(RANLIB) $@
+
+clean:
+	$(RM) $(ASMS) $(LIBRARY)
+
+.c.s:
+	$(CC) $(CPPFLAGS) $(CFLAGS) -S  $<
+
+.cpp.s:
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -S  $<

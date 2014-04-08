@@ -46,7 +46,9 @@ struct _exception;
 #        include _STLP_NATIVE_CPP_C_HEADER(_str.h)
 #      endif
 #    else
-#      if defined (_STLP_HAS_INCLUDE_NEXT)
+#      if defined(MAPIP) && !defined(NEWLIB)
+#        include <mastring.h>
+#      elif defined (_STLP_HAS_INCLUDE_NEXT)
 #        include_next <string.h>
 #      else
 #        include _STLP_NATIVE_C_HEADER(string.h)

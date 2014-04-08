@@ -18,7 +18,10 @@
 
 #if !defined (_STLP_WCE_EVC3)
 
-#  if defined (_STLP_USE_NEW_C_HEADERS)
+#  if defined(MAPIP) && !defined(NEWLIB)
+#    include <matime.h>
+#    include <ma.h>
+#  elif defined (_STLP_USE_NEW_C_HEADERS)
 #    if defined (_STLP_HAS_INCLUDE_NEXT)
 #      include_next <ctime>
 #    else

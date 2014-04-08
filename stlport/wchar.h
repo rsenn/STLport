@@ -41,7 +41,15 @@ using _STLP_VENDOR_CSTD::strspn;
 #      include _STLP_NATIVE_C_HEADER(stddef.h)
 #    endif
 #  else
-#    if defined (_STLP_HAS_INCLUDE_NEXT)
+#    if defined(MAPIP) && !defined(NEWLIB)
+#      ifdef wint_t
+#        undef wint_t
+      typedef int wint_t;
+#      else
+#        define wint_t wint_t_dummy__
+#      include_next <wchar.h>
+#      endif
+#    elif defined (_STLP_HAS_INCLUDE_NEXT)
 #      include_next <wchar.h>
 #    else
 #      include _STLP_NATIVE_C_HEADER(wchar.h)

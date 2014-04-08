@@ -44,6 +44,8 @@
 
 #define _STLP_NO_THREADS 1
 
+//#undef _STLP_IMPORT_VENDOR_CSTD 
+
 #undef _STLP_PTHREADS
 //#define _STLP_NO_UNCAUGHT_EXCEPT_SUPPORT 1
 
@@ -295,7 +297,7 @@
 // #define _STLP_NATIVE_C_HEADER(header)
 
 #define _STLP_LITTLE_ENDIAN 1
-// #define _STLP_NOTHREADS 1
+#define _STLP_NOTHREADS 1
 
 //==========================================================
 #endif

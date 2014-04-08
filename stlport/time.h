@@ -26,7 +26,9 @@
 #    pragma message("eMbedded Visual C++ 3 doesn't have a time.h header; STLport won't include native time.h here")
 #  endif
 #else
-#  if defined (_STLP_HAS_INCLUDE_NEXT)
+#  if defined(MAPIP) && !defined(NEWLIB)
+#    include <matime.h>
+#  elif defined (_STLP_HAS_INCLUDE_NEXT)
 #    include_next <time.h>
 #  else
 #    include _STLP_NATIVE_C_HEADER(time.h)

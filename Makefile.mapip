@@ -1,3 +1,13 @@
+# Missing headers when not using newlib: 
+#
+# float.h         -> maapi.h, maapi_defs.h
+# locale.h        <none>
+# math.h          -> madmath.h
+# new             -> new 
+# stdio.h         -> MAFS/File.h
+# stdlib.h        -> mastdlib.h
+# string.h        -> mastring.h, mawstring.h
+#
 MOSYNCDIR ?= /opt/MoSync-4.0-Alpha
 
 ifeq ($(CONFIG),)
@@ -24,7 +34,7 @@ ARFLAGS = -L
 INSTALL = install
 
 CSOURCES = src/c_locale.c src/cxa.c
-# allocators.cpp dll_main.cpp
+# src/allocators.cpp src/dll_main.cpp
 CXXSOURCES = src/bitset.cpp src/codecvt.cpp src/collate.cpp src/complex.cpp src/complex_io.cpp src/complex_trig.cpp src/ctype.cpp src/facets_byname.cpp src/fstream.cpp src/ios.cpp src/iostream.cpp src/istream.cpp src/locale.cpp src/locale_catalog.cpp src/locale_impl.cpp src/messages.cpp src/monetary.cpp src/num_get.cpp src/num_get_float.cpp src/num_put.cpp src/num_put_float.cpp src/numpunct.cpp src/ostream.cpp src/sstream.cpp src/stdio_streambuf.cpp src/string.cpp src/strstream.cpp src/time_facets.cpp
 SOURCES = $(CSOURCES) $(CXXSOURCES)
 

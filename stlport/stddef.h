@@ -28,7 +28,9 @@
 #  include "errno.h"
 #endif
 
-#if defined (_STLP_HAS_INCLUDE_NEXT)
+#if defined(MAPIP) && !defined(NEWLIB)
+#  include <maapi_defs.h>
+#elif defined (_STLP_HAS_INCLUDE_NEXT)
 #  include_next <stddef.h>
 #else
 #  include _STLP_NATIVE_C_HEADER(stddef.h)

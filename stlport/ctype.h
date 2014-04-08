@@ -33,7 +33,9 @@
 struct _exception;
 #  endif
 
-#  if defined (_STLP_HAS_INCLUDE_NEXT)
+#  if defined(MAPIP) && !defined(NEWLIB)
+#    include <mactype.h>
+#  elif defined (_STLP_HAS_INCLUDE_NEXT)
 #    include_next <ctype.h>
 #  else
 #    include _STLP_NATIVE_C_HEADER(ctype.h)

@@ -32,7 +32,9 @@
 
 //#include <stl/config/_gcc.h>
 
-#undef _STLP_NO_NATIVE_MBSTATE_T
+#ifndef NEWLIB
+#define _STLP_NO_NATIVE_MBSTATE_T 1
+#endif
 
 #define _STLP_HAS_INCLUDE_NEXT 1
 

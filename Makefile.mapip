@@ -4,13 +4,17 @@ ifeq ($(CONFIG),)
 CONFIG = release
 endif
 
+ifeq ($(TARGET),)
+TARGET = newlib
+endif
+
 prefix = /tmp/MoSync
 
 includedir = ${prefix}/include
-pkgincludedir = $(includedir)/newlib
+pkgincludedir = $(includedir)/$(TARGET)
 
 libdir = ${prefix}/lib
-pkglibdir = $(libdir)/newlib_$(CONFIG)
+pkglibdir = $(libdir)/$(TARGET)_$(CONFIG)
 
 CC = $(MOSYNCDIR)/bin/xgcc
 CXX = $(CC) -x c++
@@ -26,11 +30,17 @@ SOURCES = $(CSOURCES) $(CXXSOURCES)
 
 HEADERS = stlport/fstream stlport/fstream.h stlport/iomanip stlport/iomanip.h stlport/ios stlport/ios.h stlport/iosfwd stlport/iostream stlport/iostream.h stlport/istream stlport/istream.h stlport/locale stlport/locale.h stlport/ostream stlport/ostream.h stlport/sstream stlport/stddef.h stlport/stdlib.h stlport/stl/_fstream.h stlport/stl/_iomanip.h stlport/stl/_ios.c stlport/stl/_ios.h stlport/stl/_ios_base.h stlport/stl/_iostream_string.h stlport/stl/_istream.c stlport/stl/_istream.h stlport/stl/_istreambuf_iterator.h stlport/stl/_new.h stlport/stl/config/_mapip.h stlport/stl/config/user_config.h stlport/streambuf stlport/streambuf.h stlport/string.h stlport/strstream stlport/strstream.h stlport/type_traits
 
-OUTPUT_DIR = build/$(CONFIG)
+OUTPUT_DIR = Output/$(TARGET)_$(CONFIG)
 
-CPPFLAGS = -Istlport -I$(MOSYNCDIR)/include/newlib
-CFLAGS =
-#-fexceptions -fvisibility=hidden
+CPPFLAGS = -Istlport 
+DEFS = -DMAPIP
+
+ifeq ($(TARGET),newlib)
+DEFS += -DNEWLIB	
+CPPFLAGS += -I$(MOSYNCDIR)/include/newlib
+else
+CPPFLAGS += -I$(MOSYNCDIR)/include
+endif
 
 ifeq ($(CONFIG),debug)
 CFLAGS += -ggdb -O -Wall
@@ -38,8 +48,8 @@ else
 CFLAGS += -g -O2
 endif
 
-DEFS = -DMAPIP
 CXXFLAGS = $(CFLAGS)
+#-fexceptions -fvisibility=hidden
 
 LIBPREFIX =
 

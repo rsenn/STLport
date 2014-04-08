@@ -1,0 +1,97 @@
+MOSYNCDIR ?= /opt/MoSync-4.0-Alpha
+
+ifeq ($(CONFIG),)
+CONFIG = release
+endif
+
+prefix = /tmp/MoSync
+
+includedir = ${prefix}/include
+pkgincludedir = $(includedir)/newlib
+
+libdir = ${prefix}/lib
+pkglibdir = $(libdir)/newlib_$(CONFIG)
+
+CC = $(MOSYNCDIR)/bin/xgcc
+CXX = $(CC) -x c++
+RANLIB = true
+AR = ${MOSYNCDIR}/bin/pipe-tool
+ARFLAGS = -L
+INSTALL = install
+
+CSOURCES = src/c_locale.c src/cxa.c
+# allocators.cpp dll_main.cpp
+CXXSOURCES = src/bitset.cpp src/codecvt.cpp src/collate.cpp src/complex.cpp src/complex_io.cpp src/complex_trig.cpp src/ctype.cpp src/facets_byname.cpp src/fstream.cpp src/ios.cpp src/iostream.cpp src/istream.cpp src/locale.cpp src/locale_catalog.cpp src/locale_impl.cpp src/messages.cpp src/monetary.cpp src/num_get.cpp src/num_get_float.cpp src/num_put.cpp src/num_put_float.cpp src/numpunct.cpp src/ostream.cpp src/sstream.cpp src/stdio_streambuf.cpp src/string.cpp src/strstream.cpp src/time_facets.cpp
+SOURCES = $(CSOURCES) $(CXXSOURCES)
+
+HEADERS = stlport/fstream stlport/fstream.h stlport/iomanip stlport/iomanip.h stlport/ios stlport/ios.h stlport/iosfwd stlport/iostream stlport/iostream.h stlport/istream stlport/istream.h stlport/locale stlport/locale.h stlport/ostream stlport/ostream.h stlport/sstream stlport/stddef.h stlport/stdlib.h stlport/stl/_fstream.h stlport/stl/_iomanip.h stlport/stl/_ios.c stlport/stl/_ios.h stlport/stl/_ios_base.h stlport/stl/_iostream_string.h stlport/stl/_istream.c stlport/stl/_istream.h stlport/stl/_istreambuf_iterator.h stlport/stl/_new.h stlport/stl/config/_mapip.h stlport/stl/config/user_config.h stlport/streambuf stlport/streambuf.h stlport/string.h stlport/strstream stlport/strstream.h stlport/type_traits
+
+OUTPUT_DIR = build/$(CONFIG)
+
+CPPFLAGS = -Istlport -I$(MOSYNCDIR)/include/newlib
+CFLAGS =
+#-fexceptions -fvisibility=hidden
+
+ifeq ($(CONFIG),debug)
+CFLAGS += -ggdb -O -Wall
+else
+CFLAGS += -g -O2
+endif
+
+DEFS = -DMAPIP
+CXXFLAGS = $(CFLAGS)
+
+LIBPREFIX =
+
+#ifeq ($(CONFIG),debug)
+#DEBUGSUFFIX =
+#else
+#DEBUGSUFFIX = D
+#endif
+LIBEXT = .lib
+LIBRARY = $(LIBPREFIX)stlport$(LIBEXT)
+
+CASMS = $(CSOURCES:src/%.c=$(OUTPUT_DIR)/%.s)
+CXXASMS = $(CXXSOURCES:src/%.cpp=$(OUTPUT_DIR)/%.s)
+
+ASMS = $(CASMS) $(CXXASMS)
+
+.PHONY: all install install-headers install-lib clean
+
+all: $(OUTPUT_DIR) $(OUTPUT_DIR)/$(LIBRARY)
+
+install: all install-headers install-lib
+
+install-headers:
+	@for H in $(HEADERS); do \
+			if [ ! -d "$(DESTDIR)$(pkgincludedir)/`dirname $$H`" ]; then \
+			  echo mkdir -p "$(DESTDIR)$(pkgincludedir)/`dirname $$H`"; \
+			  mkdir -p "$(DESTDIR)$(pkgincludedir)/`dirname $$H`"; \
+		  fi; \
+      echo "$(INSTALL) -m 644 $$H $(DESTDIR)$(pkgincludedir)/$$H"; \
+      $(INSTALL) -m 644 $$H $(DESTDIR)$(pkgincludedir)/$$H; \
+	done
+
+install-lib: $(OUTPUT_DIR)/$(LIBRARY)
+	@if [ ! -d "$(DESTDIR)$(pkglibdir)" ]; then \
+		echo mkdir -p "$(DESTDIR)$(pkglibdir)"; \
+		mkdir -p "$(DESTDIR)$(pkglibdir)"; \
+	fi
+	$(INSTALL) -m 644 $^ $(DESTDIR)$(pkglibdir)/
+
+
+$(OUTPUT_DIR):
+	mkdir -p $@
+
+$(OUTPUT_DIR)/$(LIBRARY): $(ASMS)
+	$(AR) $(ARFLAGS) $@ $^ #|| { $(RM) $@; exit 1; }
+#	$(RANLIB) $@
+
+clean:
+	$(RM) $(ASMS) $(LIBRARY)
+
+$(OUTPUT_DIR)/%.s: src/%.c
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(DEFS) -S -o $@ $< || { $(RM) $@; exit 1; }
+
+$(OUTPUT_DIR)/%.s: src/%.cpp
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(DEFS) -S -o $@ $< || { $(RM) $@; exit 1; }
